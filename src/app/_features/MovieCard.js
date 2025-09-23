@@ -1,0 +1,21 @@
+import { RatingIconSmall } from "../_icons/RatingIconSmall";
+export const MovieCard = () => {
+  return (
+    <div className="w-[230px] h-[439px] bg-white rounded-[5px] flex flex-col gap-[8px]">
+      <img
+        src="window.jpg"
+        alt="haha"
+        className="object-cover w-[230px] h-[340px] rounded-[5px]"
+      />
+      <div className="ml-[8px] flex flex-col gap-[5px]">
+        <p className="flex text-[14px] text-black items-center">
+          <div className="mr-[5px]">
+            <RatingIconSmall />{" "}
+          </div>
+          6.9 <span className="text-zinc-400 text-[13px] ">/10</span>
+        </p>
+        <p className="text-black text-[16px] font-[350] ">Dear Santa</p>
+      </div>
+    </div>
+  );
+};

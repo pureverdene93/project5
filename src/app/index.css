@@ -1,0 +1,8 @@
+.back {
+  background-color: #f4f4f5;
+  border-radius: 10px;
+  width: 1500px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
