@@ -1,7 +1,7 @@
 import { DownIcon } from "../_icons/downIcon";
 import { SearchIcon } from "../_icons/searchIcon";
 
-export const NavBar = () => {
+export const Header = () => {
   return (
     <div className="w-[1280px] h-[59px] flex flex-row justify-around items-center">
       <img src="Logo.png" alt="logo" className="w-[92px] h-[20px]" />
