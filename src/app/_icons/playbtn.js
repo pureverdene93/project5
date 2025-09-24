@@ -10,8 +10,8 @@ export const PlayBtn = () => {
       <path
         d="M3.33301 2L12.6663 8L3.33301 14V2Z"
         stroke="#18181B"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

@@ -10,8 +10,8 @@ export const DownIcon = () => {
       <path
         d="M4 6.5L8 10.5L12 6.5"
         stroke="#18181B"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

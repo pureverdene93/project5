@@ -10,8 +10,8 @@ export const NextIcon = () => {
       <path
         d="M6 12L10 8L6 4"
         stroke="#09090B"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
