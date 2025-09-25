@@ -3,6 +3,7 @@ import { MovieCard } from "./MovieCard";
 import { MovieType } from "./MovieType";
 import { useState } from "react";
 import { useEffect } from "react";
+// import { MovieSectionUpcomingSeeMore } from "./_features/MovieSectionUpcomingSeeMore";
 
 const ApiLink =
   "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
@@ -17,15 +18,19 @@ const options = {
 
 export const MovieSectionUpcoming = (props) => {
   const { title } = props;
-  const [upcomingMovieData, setUpcomingMovieData] = useState([]);
+  const [upcomingMovieData, setUpcomingMovieData] = useState(
+    []
+    // seeMoreUpcoming === 1
+  );
   const [loading, setLoading] = useState(false);
+  const [seeMoreUpcoming, setSeeMoreUpcoming] = useState(1);
 
   const getData = async () => {
     setLoading(true);
     const data = await fetch(ApiLink, options);
     const jsonData = await data.json();
     console.log(jsonData);
-    setUpcomingMovieData(jsonData.results.splice(10));
+    setUpcomingMovieData(jsonData.results);
     setLoading(false);
   };
 
@@ -40,13 +45,18 @@ export const MovieSectionUpcoming = (props) => {
   if (!loading && typeof upcomingMovieData === "undefined") {
     return <div className="text-black text-[100px]">Something wrong Test</div>;
   }
+
+  // const seeMore = () => {
+  //   setSeeMoreUpcoming(seeMoreUpcoming + 1);
+  // };
+
   return (
     <div className=" flex flex-col gap-[36px] justify-center items-center">
       <div className="w-[1275px]">
         <MovieType title={title} />
       </div>
       <div className="flex flex-wrap gap-[32px] justify-center">
-        {upcomingMovieData.map((movie, index) => {
+        {upcomingMovieData.slice(0, 10).map((movie, index) => {
           return (
             <MovieCard
               key={index}
@@ -57,6 +67,7 @@ export const MovieSectionUpcoming = (props) => {
           );
         })}
       </div>
+      {/* {seeMoreUpcoming === 2 && <MovieSectionUpcomingSeeMore />} */}
     </div>
   );
 };

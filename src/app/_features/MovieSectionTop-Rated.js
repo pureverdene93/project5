@@ -25,7 +25,7 @@ export const MovieSectionTopRated = (props) => {
     const data = await fetch(ApiLink, options);
     const jsonData = await data.json();
     console.log(jsonData);
-    setTopRatedMovieData(jsonData.results.splice(10));
+    setTopRatedMovieData(jsonData.results);
     setLoading(false);
   };
 
@@ -46,7 +46,7 @@ export const MovieSectionTopRated = (props) => {
         <MovieType title={title} />
       </div>
       <div className="flex flex-wrap gap-[32px] justify-center">
-        {topRatedMovieData.map((movie, index) => {
+        {topRatedMovieData.slice(0, 10).map((movie, index) => {
           return (
             <MovieCard
               key={index}

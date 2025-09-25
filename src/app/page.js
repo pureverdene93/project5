@@ -32,7 +32,9 @@ export default function Home() {
       <Header />
       <div className="flex flex-col gap-[52px]">
         <div className="flex flex-col gap-[52px]">
-          <HeroSLider />
+          <div className="flex flex-row overflow-scroll w-[1500px]">
+            <HeroSLider />
+          </div>
           <MovieSectionUpcoming title={"Upcoming"} />
         </div>
         <MovieSectionPopular title={"Popular"} />

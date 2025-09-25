@@ -15,9 +15,9 @@ export const MovieCard = (props) => {
       </button>
       <div className="ml-[8px] flex flex-col gap-[5px]">
         <p className="flex text-[14px] text-black items-center">
-          <div className="mr-[5px]">
+          <span className="mr-[5px]">
             <RatingIconSmall />{" "}
-          </div>
+          </span>
           10 <span className="text-zinc-400 text-[13px] ">/{rating}</span>
         </p>
         <p className="text-black text-[16px] font-[350] ">{title}</p>

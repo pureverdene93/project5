@@ -25,7 +25,7 @@ export const MovieSectionPopular = (props) => {
     const data = await fetch(ApiLink, options);
     const jsonData = await data.json();
     console.log(jsonData);
-    setPopularMovieData(jsonData.results.splice(10));
+    setPopularMovieData(jsonData.results);
     setLoading(false);
   };
 
@@ -46,7 +46,7 @@ export const MovieSectionPopular = (props) => {
         <MovieType title={title} />
       </div>
       <div className="flex flex-wrap gap-[32px] justify-center">
-        {popularMovieData.map((movie, index) => {
+        {popularMovieData.slice(0, 10).map((movie, index) => {
           return (
             <MovieCard
               key={index}
