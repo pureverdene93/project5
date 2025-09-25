@@ -22,6 +22,8 @@ const options = {
 export const HeroSLider = () => {
   const [heroSliderData, setHeroSliderData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [heroSliderNext, setHeroSliderNext] = useState(0);
+
   // const [sliderMovieTrailer, setSliderMovieTrailer] = useState(null);
 
   const getData = async () => {
@@ -50,17 +52,23 @@ export const HeroSLider = () => {
     );
   }
 
+  const current = heroSliderData;
+
+  const heroSliderNextButton = () => {
+    setHeroSliderNext(current + 1);
+  };
+
   return (
     <>
-      {heroSliderData.slice(0, 3).map((movie, index) => {
+      {heroSliderData.slice(0, 1).map((movie) => {
         return (
           <div
-            className="w-full  relative z-[16] flex items-center justify-between h-[600px] shrink-0"
-            key={index}
+            className="w-full  relative z-[16] flex items-center justify-between h-[625px] shrink-0"
+            key={movie.id}
           >
             <img
               src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-              className="w-full h-[600px] object-cover absolute z-[-1] "
+              className="w-full h-[625px] object-cover absolute z-[-1] "
               alt="HeroSlider"
             />
 
@@ -84,7 +92,10 @@ export const HeroSLider = () => {
               </div>
             </div>
 
-            <button className="w-[40px] h-[40px] bg-white text-black rounded-[100%] flex items-center justify-center cursor-pointer mr-[44px]">
+            <button
+              className="w-[40px] h-[40px] bg-white text-black rounded-[100%] flex items-center justify-center cursor-pointer mr-[44px]"
+              onClick={heroSliderNextButton}
+            >
               <NextIcon />
             </button>
           </div>

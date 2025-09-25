@@ -16,7 +16,7 @@ export const MovieCard = (props) => {
       <div className="ml-[8px] flex flex-col gap-[5px]">
         <p className="flex text-[14px] text-black items-center">
           <span className="mr-[5px]">
-            <RatingIconSmall />{" "}
+            <RatingIconSmall />
           </span>
           10 <span className="text-zinc-400 text-[13px] ">/{rating}</span>
         </p>
