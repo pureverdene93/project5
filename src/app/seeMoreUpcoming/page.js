@@ -1,12 +1,8 @@
 "use client";
-import { Header } from "./_components/Header";
-import { HeroSLider } from "./_components/HeroSlider";
-import { MovieSectionUpcoming } from "./_features/MovieSectionUpcoming";
-import "./index.css";
-import { Footer } from "./_components/Footer";
-import { useEffect } from "react";
-import { MovieSectionPopular } from "./_features/MovieSectionPopular";
-import { MovieSectionTopRated } from "./_features/MovieSectionTop-Rated";
+import "../index.css";
+import { Header } from "../_components/Header";
+import { Footer } from "../_components/Footer";
+import { UpcomingMovieSection } from "./_components/UpcomigMovieSection";
 
 // const ApiLink =
 //   "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
@@ -28,9 +24,14 @@ export default function Home() {
   //   getData();
   // }, []);
   return (
-    <div className="back">
-      <Header />
-      <Footer />
-    </div>
+    <>
+      <div className="back">
+        <div className="flex flex-col gap-[52px]">
+          <Header />
+          <UpcomingMovieSection />
+          <Footer />
+        </div>
+      </div>
+    </>
   );
 }

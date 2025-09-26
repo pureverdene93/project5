@@ -1,10 +1,9 @@
 "use client";
-import { MovieCard } from "./MovieCard";
-import { MovieType } from "./MovieType";
 import { useState } from "react";
 import { useEffect } from "react";
-import { SeeMore } from "../_icons/SeeMoreIcon";
-import Link from "next/link";
+import { MovieCard } from "@/app/_features/MovieCard";
+import { Pre } from "../_icons/Pre";
+import { Next } from "../_icons/Next";
 
 // import { MovieSectionUpcomingSeeMore } from "./_features/MovieSectionUpcomingSeeMore";
 
@@ -19,14 +18,10 @@ const options = {
   },
 };
 
-export const MovieSectionUpcoming = (props) => {
+export const UpcomingMovieSection = (props) => {
   const { title } = props;
-  const [upcomingMovieData, setUpcomingMovieData] = useState(
-    []
-    // seeMoreUpcoming === 1
-  );
+  const [upcomingMovieData, setUpcomingMovieData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [seeMoreUpcoming, setSeeMoreUpcoming] = useState(1);
 
   const getData = async () => {
     setLoading(true);
@@ -49,27 +44,15 @@ export const MovieSectionUpcoming = (props) => {
     return <div className="text-black text-[100px]">Something wrong Test</div>;
   }
 
-  // const seeMore = () => {
-  //   setSeeMoreUpcoming(seeMoreUpcoming + 1);
-  // };
-
   return (
     <div className=" flex flex-col gap-[36px] justify-center items-center">
       <div className="w-[1275px]">
         <div className="flex items-center justify-between flex-row">
-          <p className="text-black text-[24px] font-semibold">{title}</p>
-          <Link href={"/seeMoreUpcoming"}>
-            <button
-              className="text-black flex items-center gap-[14px] cursor-pointer"
-              // onClick={seeMore}
-            >
-              See more <SeeMore />
-            </button>
-          </Link>
+          <p className="text-black text-[24px] font-semibold">Upcoming</p>
         </div>
       </div>
       <div className="flex flex-wrap gap-[32px] justify-center">
-        {upcomingMovieData.slice(0, 10).map((movie, index) => {
+        {upcomingMovieData.map((movie, index) => {
           return (
             <MovieCard
               key={index}
@@ -80,7 +63,16 @@ export const MovieSectionUpcoming = (props) => {
           );
         })}
       </div>
-      {/* {seeMoreUpcoming === 2 && <MovieSectionUpcomingSeeMore />} */}
+      <div className="flex flex-row items-end h-[40px] justify-center w-[1275px]">
+        <button className="w-[114px] [h-40px] text-[16px] flex items-center justify-center cursor-pointer gap-[2px] text-black">
+          <Pre />
+          Previous
+        </button>
+        <button className="w-[88px] h-[40px] text-[16px] flex items-center justify-center cursor-pointer gap-[2px] text-black">
+          Next
+          <Next />
+        </button>
+      </div>
     </div>
   );
 };

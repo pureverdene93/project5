@@ -8,8 +8,7 @@ import { useEffect } from "react";
 
 const ApiLink =
   "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1";
-const VideoLink =
-  "https://api.themoviedb.org/3/movie/${id}/videos?language=en-US";
+
 const options = {
   method: "GET",
   headers: {
@@ -23,8 +22,7 @@ export const HeroSLider = () => {
   const [heroSliderData, setHeroSliderData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [heroSliderNext, setHeroSliderNext] = useState(0);
-
-  // const [sliderMovieTrailer, setSliderMovieTrailer] = useState(null);
+  const [sliderMovieTrailer, setSliderMovieTrailer] = useState(null);
 
   const getData = async () => {
     setLoading(true);
@@ -51,6 +49,23 @@ export const HeroSLider = () => {
       <div className="text-black text-[100px]">...something wrong test</div>
     );
   }
+
+  const trailerDisplay = async (id) => {
+    const trailerPlay = await fetch(
+      `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
+      options
+    );
+    const trailerData = await trailerPlay.json();
+    const youtubeTrailer = trailerData.results.find(
+      (vid) => vid.type === "Trailer" && vid.site === "Youtube"
+    );
+    if (youtubeTrailer) {
+      setSliderMovieTrailer(youtubeTrailer.key);
+    } else {
+      setSliderMovieTrailer(null);
+    }
+    console.log(youtubeTrailer);
+  };
 
   const current = heroSliderData;
 
@@ -86,7 +101,20 @@ export const HeroSLider = () => {
               <div className="flex flex-col gap-[16px] text-[14px]">
                 <p className="w-[400px] text-white">{movie.overview}</p>
 
-                <button className="w-[145px] h-[40px] flex items-center justify-evenly rounded-[5px] bg-white text-black text-[16px] cursor-pointer">
+                <button
+                  className="w-[145px] h-[40px] flex items-center justify-evenly rounded-[5px] bg-white text-black text-[16px] cursor-pointer"
+                  onClick={() => trailerDisplay(movie.id)}
+                >
+                  {sliderMovieTrailer && (
+                    <iframe
+                      className="w-[500px] h-[300px]"
+                      src={`https://www.youtube.com/embed/${youtubeTrailerkey}`}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  )}
                   <PlayBtn /> Watch Trailer
                 </button>
               </div>
