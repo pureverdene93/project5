@@ -22,11 +22,13 @@ export const UpcomingMovieSection = (props) => {
 
   const [upcomingMovieData, setUpcomingMovieData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
 
   const getData = async () => {
     setLoading(true);
     const data = await fetch(ApiLink, options);
     const jsonData = await data.json();
+    setTotalPages(jsonData.total_pages);
     console.log("how many pages are in here", jsonData.total_pages);
     setUpcomingMovieData(jsonData.results);
     setLoading(false);
@@ -81,31 +83,40 @@ export const UpcomingMovieSection = (props) => {
         })}
       </div>
       <div className="flex flex-row items-center h-[40px] justify-end w-[1275px]">
-        <button
-          className="w-[114px] [h-40px] text-[16px] flex items-center justify-center cursor-pointer gap-[2px] text-black"
-          onClick={prePage}
-        >
-          <Pre />
-          Previous
-        </button>
-        {[1, 2, 3, 4, 5, 6].map((num) => (
+        {page > 1 && (
           <button
-            onClick={() => pageNum(num)}
-            key={num}
-            className={`text-black cursor-pointer px-2 ${
-              page === num ? "  border rounded-[5px]" : ""
-            }`}
+            className="w-[114px] [h-40px] text-[16px] flex items-center justify-center cursor-pointer gap-[2px] text-black"
+            onClick={prePage}
           >
-            {num}
+            <Pre />
+            Previous
           </button>
-        ))}
-        <button
-          className="w-[88px] h-[40px] text-[16px] flex items-center justify-center cursor-pointer gap-[2px] text-black"
-          onClick={nextPage}
-        >
-          Next
-          <Next />
-        </button>
+        )}
+
+        {Array.from({ length: totalPages }, (_, i) => {
+          const num = i + 1;
+          return (
+            <button
+              key={num}
+              onClick={() => pageNum(num)}
+              className={`px-3 py-1 cursor-pointer rounded-md ${
+                page === num ? "bg-black text-white" : "text-black border"
+              }`}
+            >
+              {num}
+            </button>
+          );
+        })}
+
+        {page < 73 && (
+          <button
+            className="w-[88px] h-[40px] text-[16px] flex items-center justify-center cursor-pointer gap-[2px] text-black"
+            onClick={nextPage}
+          >
+            Next
+            <Next />
+          </button>
+        )}
       </div>
     </div>
   );

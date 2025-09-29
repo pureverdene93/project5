@@ -1,15 +1,60 @@
+import { useEffect, useState } from "react";
 import { DownIcon } from "../_icons/downIcon";
 import { SearchIcon } from "../_icons/searchIcon";
+import { GenresIcon } from "../_icons/GenresIcon";
+
+const ApiLink = "https://api.themoviedb.org/3/genre/movie/list?language=en";
+
+const options = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NzZiMzEwNzJlZDg5ODcwMzQxM2Y0NzkyYzZjZTdjYyIsIm5iZiI6MTczODAyNjY5NS44NCwic3ViIjoiNjc5ODJlYzc3MDJmNDkyZjQ3OGY2OGUwIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.k4OF9yGrhA2gZ4VKCH7KLnNBB2LIf1Quo9c3lGF6toE",
+  },
+};
 
 export const Header = () => {
+  const [movieGenre, setMovieGenre] = useState([]);
+
+  const getdata = async () => {
+    const data = await fetch(ApiLink, options);
+    const jsonData = await data.json();
+    setMovieGenre(jsonData.genres);
+    console.log("genre list is here", movieGenre);
+  };
+  useEffect(() => {
+    getdata();
+  }, []);
+
   return (
-    <div className="w-[1280px] h-[59px] flex flex-row justify-around items-center">
+    <div className="w-[1280px] h-[59px] flex flex-row justify-around items-center relative">
       <img src="Logo.png" alt="logo" className="w-[92px] h-[20px]" />
       <div className="flex gap-[12px]">
         <button className="flex items-center justify-center gap-[8px] w-[97px] h-[36px] text-black rounded-[5px] cursor-pointer text-[14px] border-1 border-zinc-200">
           <DownIcon />
           Genre
         </button>
+        <div className="w-[577px] h-[333px] absolute bg-white z-[99] flex items-center flex-col">
+          <div>
+            <p className="text-black text-[24px] font-semibold">Genres</p>
+            <p className="text-black text-[16px] font-[340]">
+              See lists of movies by genre
+            </p>
+            <div className="w-[537px] h-[1px] bg-zinc-300"></div>
+          </div>
+          <div className="flex flex-wrap">
+            {movieGenre.map((movieGenres) => {
+              return (
+                <button className="text-black w-[76px] h-[22px] text-[12px] font-semibold flex flex-row border justify-center items-center ">
+                  {movieGenres.name}
+                  <GenresIcon />
+                </button>
+              );
+              // console.log(movieGenres.name);
+            })}
+          </div>
+        </div>
 
         <div className="w-[379px] h-[36px] border  rounded-[5px] flex items-center justify-center">
           <SearchIcon />
