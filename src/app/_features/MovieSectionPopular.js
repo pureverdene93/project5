@@ -24,7 +24,7 @@ export const MovieSectionPopular = (props) => {
     setLoading(true);
     const data = await fetch(ApiLink, options);
     const jsonData = await data.json();
-    console.log(jsonData);
+    // console.log(jsonData);
     setPopularMovieData(jsonData.results);
     setLoading(false);
   };
@@ -32,7 +32,7 @@ export const MovieSectionPopular = (props) => {
   useEffect(() => {
     getData();
   }, []);
-  console.log(popularMovieData);
+  // console.log(popularMovieData);
 
   if (loading) {
     return <div className="text-black text-[100px]">...loading test</div>;

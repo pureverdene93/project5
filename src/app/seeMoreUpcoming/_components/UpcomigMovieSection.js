@@ -5,10 +5,6 @@ import { MovieCard } from "@/app/_features/MovieCard";
 import { Pre } from "../_icons/Pre";
 import { Next } from "../_icons/Next";
 
-// import { MovieSectionUpcomingSeeMore } from "./_features/MovieSectionUpcomingSeeMore";
-
-const ApiLink =
-  "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
 const options = {
   method: "GET",
   headers: {
@@ -19,7 +15,11 @@ const options = {
 };
 
 export const UpcomingMovieSection = (props) => {
+  const [page, setPage] = useState(1);
+  const ApiLink = `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${page}`;
+
   const { title } = props;
+
   const [upcomingMovieData, setUpcomingMovieData] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -27,15 +27,32 @@ export const UpcomingMovieSection = (props) => {
     setLoading(true);
     const data = await fetch(ApiLink, options);
     const jsonData = await data.json();
-    console.log(jsonData);
+    console.log("how many pages are in here", jsonData.total_pages);
     setUpcomingMovieData(jsonData.results);
     setLoading(false);
   };
 
   useEffect(() => {
     getData();
-  }, []);
-  console.log(upcomingMovieData);
+  }, [page]);
+  // console.log("Upcoming movie data page 1", upcomingMovieData);
+  // console.log("Upcoming movie data length", upcomingMovieData.length);
+  // console.log(ApiLink.length);
+
+  const nextPage = () => {
+    setPage(page + 1);
+  };
+  const prePage = () => {
+    if (page === 1) {
+      setPage(page);
+    }
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+  const pageNum = (num) => {
+    setPage(num);
+  };
 
   if (loading) {
     return <div className="text-black text-[100px]">...loading test</div>;
@@ -63,12 +80,29 @@ export const UpcomingMovieSection = (props) => {
           );
         })}
       </div>
-      <div className="flex flex-row items-end h-[40px] justify-center w-[1275px]">
-        <button className="w-[114px] [h-40px] text-[16px] flex items-center justify-center cursor-pointer gap-[2px] text-black">
+      <div className="flex flex-row items-center h-[40px] justify-end w-[1275px]">
+        <button
+          className="w-[114px] [h-40px] text-[16px] flex items-center justify-center cursor-pointer gap-[2px] text-black"
+          onClick={prePage}
+        >
           <Pre />
           Previous
         </button>
-        <button className="w-[88px] h-[40px] text-[16px] flex items-center justify-center cursor-pointer gap-[2px] text-black">
+        {[1, 2, 3, 4, 5, 6].map((num) => (
+          <button
+            onClick={() => pageNum(num)}
+            key={num}
+            className={`text-black cursor-pointer px-2 ${
+              page === num ? "  border rounded-[5px]" : ""
+            }`}
+          >
+            {num}
+          </button>
+        ))}
+        <button
+          className="w-[88px] h-[40px] text-[16px] flex items-center justify-center cursor-pointer gap-[2px] text-black"
+          onClick={nextPage}
+        >
           Next
           <Next />
         </button>

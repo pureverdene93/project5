@@ -9,7 +9,7 @@ export const MovieCard = (props) => {
       <button className="cursor-pointer">
         <img
           src={imageSrc}
-          alt="haha"
+          alt="Image Not Found"
           className="object-cover w-[230px] h-[340px] rounded-[5px]"
         />
       </button>

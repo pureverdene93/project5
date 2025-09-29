@@ -32,7 +32,7 @@ export const MovieSectionUpcoming = (props) => {
     setLoading(true);
     const data = await fetch(ApiLink, options);
     const jsonData = await data.json();
-    console.log(jsonData);
+    // console.log(jsonData);
     setUpcomingMovieData(jsonData.results);
     setLoading(false);
   };
@@ -40,7 +40,7 @@ export const MovieSectionUpcoming = (props) => {
   useEffect(() => {
     getData();
   }, []);
-  console.log(upcomingMovieData);
+  // console.log(upcomingMovieData);
 
   if (loading) {
     return <div className="text-black text-[100px]">...loading test</div>;

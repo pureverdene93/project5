@@ -24,7 +24,7 @@ export const MovieSectionTopRated = (props) => {
     setLoading(true);
     const data = await fetch(ApiLink, options);
     const jsonData = await data.json();
-    console.log(jsonData);
+    // console.log(jsonData);
     setTopRatedMovieData(jsonData.results);
     setLoading(false);
   };
@@ -32,7 +32,7 @@ export const MovieSectionTopRated = (props) => {
   useEffect(() => {
     getData();
   }, []);
-  console.log(topRatedMovieData);
+  // console.log(topRatedMovieData);
 
   if (loading) {
     return <div className="text-black text-[100px]">...loading test</div>;
