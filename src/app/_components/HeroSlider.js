@@ -92,6 +92,8 @@ export const HeroSLider = () => {
     // console.log(youtubeTrailer);
   };
 
+  console.log("this is slider movie trailer", sliderMovieTrailer);
+
   // const movie = heroSliderData(heroSliderNext);
   // console.log(movie);
 

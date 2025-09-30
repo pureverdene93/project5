@@ -23,6 +23,7 @@ export const UpcomingMovieSection = (props) => {
   const [upcomingMovieData, setUpcomingMovieData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
+  const [pagination, setPagination] = useState(false);
 
   const getData = async () => {
     setLoading(true);
@@ -51,6 +52,12 @@ export const UpcomingMovieSection = (props) => {
     if (page > 1) {
       setPage(page - 1);
     }
+    if (page === totalPages) {
+      setPage(page);
+    }
+    if (page > 7) {
+      setPagination(true);
+    }
   };
   const pageNum = (num) => {
     setPage(num);
@@ -62,7 +69,6 @@ export const UpcomingMovieSection = (props) => {
   if (!loading && typeof upcomingMovieData === "undefined") {
     return <div className="text-black text-[100px]">Something wrong Test</div>;
   }
-
   return (
     <div className=" flex flex-col gap-[36px] justify-center items-center">
       <div className="w-[1275px]">
@@ -83,15 +89,13 @@ export const UpcomingMovieSection = (props) => {
         })}
       </div>
       <div className="flex flex-row items-center h-[40px] justify-end w-[1275px]">
-        {page > 1 && (
-          <button
-            className="w-[114px] [h-40px] text-[16px] flex items-center justify-center cursor-pointer gap-[2px] text-black"
-            onClick={prePage}
-          >
-            <Pre />
-            Previous
-          </button>
-        )}
+        <button
+          className="w-[114px] [h-40px] text-[16px] flex items-center justify-center cursor-pointer gap-[2px] text-black"
+          onClick={prePage}
+        >
+          <Pre />
+          Previous
+        </button>
 
         {Array.from({ length: totalPages }, (_, i) => {
           const num = i + 1;
@@ -107,16 +111,13 @@ export const UpcomingMovieSection = (props) => {
             </button>
           );
         })}
-
-        {page < 73 && (
-          <button
-            className="w-[88px] h-[40px] text-[16px] flex items-center justify-center cursor-pointer gap-[2px] text-black"
-            onClick={nextPage}
-          >
-            Next
-            <Next />
-          </button>
-        )}
+        <button
+          className="w-[88px] h-[40px] text-[16px] flex items-center justify-center cursor-pointer gap-[2px] text-black"
+          onClick={nextPage}
+        >
+          Next
+          <Next />
+        </button>
       </div>
     </div>
   );

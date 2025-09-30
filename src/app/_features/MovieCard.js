@@ -1,9 +1,10 @@
 "use client";
-
 import { RatingIconSmall } from "../_icons/RatingIconSmall";
 
 export const MovieCard = (props) => {
-  const { title, rating, imageSrc } = props;
+  const { title, rating, imageSrc, movieId } = props;
+  console.log("this is movie id", movieId);
+
   return (
     <div className="w-[230px] h-[439px] bg-white rounded-[5px] flex flex-col gap-[8px]">
       <button className="cursor-pointer">
