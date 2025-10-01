@@ -9,7 +9,7 @@ import { useRef } from "react";
 import { PrevIcon } from "../_icons/PrevIcon";
 
 const ApiLink =
-  "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1";
+  "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=3";
 
 const options = {
   method: "GET",

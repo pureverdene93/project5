@@ -1,9 +1,26 @@
 "use client";
 import { RatingIconSmall } from "../_icons/RatingIconSmall";
+import { useRouter } from "next/navigation";
 
 export const MovieCard = (props) => {
-  const { title, rating, imageSrc, movieId } = props;
-  console.log("this is movie id", movieId);
+  const {
+    title,
+    rating,
+    imageSrc,
+    upcomingMovieId,
+    popularMovieId,
+    topRatedMovieId,
+  } = props;
+
+  console.log("upcoming movie id", upcomingMovieId);
+
+  const router = useRouter();
+
+  const handleMovieDetail = () => {
+    router.push(`movie-details/${upcomingMovieId}`);
+    // router.push(`movie-details/${popularMovieId}`);
+    // router.push(`movie-details/${topRatedMovieId}`);
+  };
 
   return (
     <div className="w-[230px] h-[439px] bg-white rounded-[5px] flex flex-col gap-[8px]">
@@ -12,6 +29,7 @@ export const MovieCard = (props) => {
           src={imageSrc}
           alt="Image Not Found"
           className="object-cover w-[230px] h-[340px] rounded-[5px]"
+          onClick={handleMovieDetail}
         />
       </button>
       <div className="ml-[8px] flex flex-col gap-[5px]">

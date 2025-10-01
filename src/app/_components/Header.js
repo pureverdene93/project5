@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import { DownIcon } from "../_icons/downIcon";
 import { SearchIcon } from "../_icons/searchIcon";

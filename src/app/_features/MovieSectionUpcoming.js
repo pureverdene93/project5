@@ -76,12 +76,11 @@ export const MovieSectionUpcoming = (props) => {
               title={movie.title}
               rating={movie.vote_average.toFixed(1)}
               imageSrc={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-              movieId={movie.id}
+              upcomingMovieId={movie.id}
             />
           );
         })}
       </div>
-      {/* {seeMoreUpcoming === 2 && <MovieSectionUpcomingSeeMore />} */}
     </div>
   );
 };

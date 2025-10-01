@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { MovieCard } from "@/app/_features/MovieCard";
-import { Pre } from "../_icons/Pre";
-import { Next } from "../_icons/Next";
+import { Next } from "@/app/seeMoreUpcoming/_icons/Next";
+import { Pre } from "@/app/seeMoreUpcoming/_icons/Pre";
 
 const options = {
   method: "GET",
@@ -14,13 +14,13 @@ const options = {
   },
 };
 
-export const UpcomingMovieSection = (props) => {
+export const TopRatedMovieSection = (props) => {
   const [page, setPage] = useState(1);
-  const ApiLink = `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${page}`;
+  const ApiLink = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}`;
 
   const { title } = props;
 
-  const [upcomingMovieData, setUpcomingMovieData] = useState([]);
+  const [topRatedMovieData, setTopRatedMovieData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
   const [pagination, setPagination] = useState(false);
@@ -31,7 +31,7 @@ export const UpcomingMovieSection = (props) => {
     const jsonData = await data.json();
     setTotalPages(jsonData.total_pages);
     console.log("how many pages are in here", jsonData.total_pages);
-    setUpcomingMovieData(jsonData.results);
+    setTopRatedMovieData(jsonData.results);
     setLoading(false);
   };
 
@@ -66,25 +66,25 @@ export const UpcomingMovieSection = (props) => {
   if (loading) {
     return <div className="text-black text-[100px]">...loading test</div>;
   }
-  if (!loading && typeof upcomingMovieData === "undefined") {
+  if (!loading && typeof topRatedMovieData === "undefined") {
     return <div className="text-black text-[100px]">Something wrong Test</div>;
   }
   return (
     <div className=" flex flex-col gap-[36px] justify-center items-center">
       <div className="w-[1275px]">
         <div className="flex items-center justify-between flex-row">
-          <p className="text-black text-[24px] font-semibold">Upcoming</p>
+          <p className="text-black text-[24px] font-semibold">Top Rated</p>
         </div>
       </div>
       <div className="flex flex-wrap gap-[32px] justify-center">
-        {upcomingMovieData.map((movie, index) => {
+        {topRatedMovieData.map((movie, index) => {
           return (
             <MovieCard
               key={index}
               title={movie.title}
               rating={movie.vote_average.toFixed(1)}
               imageSrc={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-              upcomingMovieId={movie.id}
+              topRatedMovieId={movie.id}
             />
           );
         })}

@@ -1,8 +1,9 @@
 "use client";
 import { MovieCard } from "./MovieCard";
-import { MovieType } from "./MovieType";
 import { useState } from "react";
 import { useEffect } from "react";
+import Link from "next/link";
+import { SeeMore } from "../_icons/SeeMoreIcon";
 
 const ApiLink =
   "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
@@ -33,7 +34,7 @@ export const MovieSectionPopular = (props) => {
     getData();
   }, []);
   // console.log(popularMovieData);
-
+  console.log(popularMovieData, "asdosaodoasmdksandksakis");
   if (loading) {
     return <div className="text-black text-[100px]">...loading test</div>;
   }
@@ -43,7 +44,17 @@ export const MovieSectionPopular = (props) => {
   return (
     <div className=" flex flex-col gap-[36px] justify-center items-center">
       <div className="w-[1275px]">
-        <MovieType title={title} />
+        <div className="flex items-center justify-between flex-row">
+          <p className="text-black text-[24px] font-semibold">Popular</p>
+          <Link href={"/seeMorePopular"}>
+            <button
+              className="text-black flex items-center gap-[14px] cursor-pointer"
+              // onClick={seeMore}
+            >
+              See more <SeeMore />
+            </button>
+          </Link>
+        </div>
       </div>
       <div className="flex flex-wrap gap-[32px] justify-center">
         {popularMovieData.slice(0, 10).map((movie, index) => {
@@ -53,6 +64,7 @@ export const MovieSectionPopular = (props) => {
               title={movie.title}
               rating={movie.vote_average.toFixed(1)}
               imageSrc={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+              popularMovieId={movie.id}
             />
           );
         })}
