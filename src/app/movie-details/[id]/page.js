@@ -8,6 +8,7 @@ import { PlayBtn } from "@/app/_icons/playbtn";
 import { useParams } from "next/navigation";
 import { RatingIcon } from "@/app/_icons/ratingIcon";
 import { CrewDetail } from "../_components/CrewDetail";
+// import { SimilarMovieCard } from "../_components/SimilarMoviesCard";
 
 const options = {
   method: "GET",
@@ -28,11 +29,13 @@ export default function Home() {
 
   const ApiLink = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
   const movieTeam = `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`;
+  const similarMovieApiLink = `https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=1`;
 
   const [movieDetail, setMovieDetail] = useState({});
   const [movieGenre, setMovieGenre] = useState([]);
   const [movieTeamDetailCrew, setMovieTeamDetailCrew] = useState([]);
   const [movieTeamDetailCast, setMovieTeamDetailCast] = useState([]);
+  const [similarMovieData, setSimilarMovieData] = useState([]);
 
   const getData = async () => {
     const data = await fetch(ApiLink, options);
@@ -45,9 +48,14 @@ export default function Home() {
     setMovieTeamDetailCrew(teamJsonData.crew);
     setMovieTeamDetailCast(teamJsonData.cast);
 
+    const similarMovieData = await fetch(similarMovieApiLink, options);
+    const similarMovieJsonData = await similarMovieData.json();
+    setSimilarMovieData(similarMovieJsonData);
+
     // console.log("this is movie detail", jsonData.genres);
   };
-  console.log("this is movie team crew", movieTeamDetailCrew);
+
+  console.log("this is similar movies data", similarMovieData);
 
   const findDirector = movieTeamDetailCrew.find(
     (member) => member.department === "Directing"
@@ -67,7 +75,7 @@ export default function Home() {
   return (
     <div className="back">
       <Header />
-      <div className="mt-[52px] mb-[100px] gap-[32px] w-[1080px]">
+      <div className="flex flex-col mt-[52px] mb-[100px] gap-[32px] w-[1080px]">
         <div className=" flex flex-col gap-[24px]">
           <div className=" h-[72px] flex items-center justify-between">
             <div>
@@ -87,7 +95,7 @@ export default function Home() {
                     {movieDetail.vote_average}
                     <span className="text-zinc-500 text-[14px]">/10</span>
                   </p>
-                  <p className="text-black">{movieDetail.vote_count}k</p>
+                  <p className="text-black">{movieDetail.vote_count}</p>
                 </div>
               </div>
             </div>
@@ -137,8 +145,14 @@ export default function Home() {
             job={"Writers"}
             name={findWriter ? findWriter.name : "Unknown"}
           />
-          <CrewDetail job={"Stars"} name={movieTeamDetailCast.name} />
+          <CrewDetail
+            job={"Stars"}
+            name={movieTeamDetailCast.slice(0, 3).map((movie) => {
+              return movie.name;
+            })}
+          />
         </div>
+        {/* <SimilarMovieCard /> */}
       </div>
       <Footer />
     </div>
