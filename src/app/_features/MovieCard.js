@@ -3,23 +3,15 @@ import { RatingIconSmall } from "../_icons/RatingIconSmall";
 import { useRouter } from "next/navigation";
 
 export const MovieCard = (props) => {
-  const {
-    title,
-    rating,
-    imageSrc,
-    upcomingMovieId,
-    popularMovieId,
-    topRatedMovieId,
-  } = props;
+  const { title, rating, imageSrc, upcomingMovieId } = props;
 
   console.log("upcoming movie id", upcomingMovieId);
 
   const router = useRouter();
+  const routerPopular = useRouter();
 
   const handleMovieDetail = () => {
     router.push(`movie-details/${upcomingMovieId}`);
-    // router.push(`movie-details/${popularMovieId}`);
-    // router.push(`movie-details/${topRatedMovieId}`);
   };
 
   return (

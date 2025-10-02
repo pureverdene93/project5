@@ -4,7 +4,10 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Footer } from "@/app/_components/Footer";
 import { Header } from "@/app/_components/Header";
+import { PlayBtn } from "@/app/_icons/playbtn";
 import { useParams } from "next/navigation";
+import { RatingIcon } from "@/app/_icons/ratingIcon";
+import { CrewDetail } from "../_components/CrewDetail";
 
 const options = {
   method: "GET",
@@ -24,35 +27,117 @@ export default function Home() {
   // console.log("this is params", param);
 
   const ApiLink = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
+  const movieTeam = `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`;
 
   const [movieDetail, setMovieDetail] = useState({});
+  const [movieGenre, setMovieGenre] = useState([]);
+  const [movieTeamDetailCrew, setMovieTeamDetailCrew] = useState([]);
+  const [movieTeamDetailCast, setMovieTeamDetailCast] = useState([]);
 
   const getData = async () => {
     const data = await fetch(ApiLink, options);
     const jsonData = await data.json();
     setMovieDetail(jsonData);
-    console.log("this is movie detail", jsonData);
+    setMovieGenre(jsonData.genres);
+
+    const teamData = await fetch(movieTeam, options);
+    const teamJsonData = await teamData.json();
+    setMovieTeamDetailCrew(teamJsonData.crew);
+    setMovieTeamDetailCast(teamJsonData.cast);
+
+    // console.log("this is movie detail", jsonData.genres);
   };
+  console.log("this is movie team crew", movieTeamDetailCrew);
+
+  const findDirector = movieTeamDetailCrew.find(
+    (member) => member.department === "Directing"
+  );
+  const findWriter = movieTeamDetailCrew.find(
+    (member) => member.department === "Writing"
+  );
+
+  console.log("director", findDirector);
+  console.log("writter", findWriter);
+  console.log("stars", movieTeamDetailCast);
 
   useEffect(() => {
     getData();
   }, [id]);
 
   return (
-    <div className="back h-[1880px]">
+    <div className="back">
       <Header />
-      <div className="w-[1080px] h-[72px] flex items-center justify-between">
-        <div>
-          <p className="text-black font-[700] text-[36px]">
-            {movieDetail.title}
-          </p>
-          <p className="text-black">
-            {movieDetail.release_date} {movieDetail.runtime}
-          </p>
+      <div className="mt-[52px] mb-[100px] gap-[32px] w-[1080px]">
+        <div className=" flex flex-col gap-[24px]">
+          <div className=" h-[72px] flex items-center justify-between">
+            <div>
+              <p className="text-black font-[700] text-[36px]">
+                {movieDetail.title}
+              </p>
+              <p className="text-black">
+                {movieDetail.release_date} {movieDetail.runtime}
+              </p>
+            </div>
+            <div>
+              <p className="text-black">Rating</p>
+              <div className="flex flex-row items-center gap-[5px]">
+                <RatingIcon />
+                <div className="flex flex-col">
+                  <p className="text-black">
+                    {movieDetail.vote_average}
+                    <span className="text-zinc-500 text-[14px]">/10</span>
+                  </p>
+                  <p className="text-black">{movieDetail.vote_count}k</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex gap-[32px]">
+            <img
+              src={`https://image.tmdb.org/t/p/original/${movieDetail.poster_path}`}
+              className="w-[290px] h-[428px] object-cover"
+            />
+            <div className="w-[760px] h-[428px] relative z-[0] flex items-end">
+              <img
+                src={`https://image.tmdb.org/t/p/original/${movieDetail.backdrop_path}`}
+                className="w-full h-full object-cover absolute z-[-1]"
+              />
+              <div className="flex ml-[24px] mb-[24px] items-center gap-[5px]">
+                <button className="cursor-pointer w-[40px] h-[40px] rounded-[100%] bg-white flex items-center justify-center ">
+                  <PlayBtn />
+                </button>
+                <p>Play Trailer </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
-          <p className="text-black">Rating</p>
-          <div></div>
+        <div className="flex flex-col gap-[20px]">
+          <div className="flex items-center gap-[12px]">
+            {movieGenre.map((movie, index) => {
+              return (
+                <p
+                  className="text-black border-zinc-300 border rounded-[10px] h-[20px] flex
+               justify-center items-center min-w-[50px] pl-[10px] pr-[10px] text-[12px]
+               font-semibold"
+                  key={index}
+                >
+                  {movie.name}
+                </p>
+              );
+            })}
+          </div>
+          <p className="text-[16px] text-black font-[300]">
+            {movieDetail.overview}
+          </p>
+          <CrewDetail
+            job={"Director"}
+            name={findDirector ? findDirector.name : "Unknown"}
+          />
+          <CrewDetail
+            job={"Writers"}
+            name={findWriter ? findWriter.name : "Unknown"}
+          />
+          <CrewDetail job={"Stars"} name={movieTeamDetailCast.name} />
         </div>
       </div>
       <Footer />

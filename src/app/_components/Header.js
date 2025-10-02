@@ -35,7 +35,7 @@ export const Header = () => {
   console.log(genreBtn, "ashgdashdas");
 
   return (
-    <div className="w-[1280px] h-[59px] flex flex-row justify-around items-center relative">
+    <div className="w-[1280px] h-[59px] flex flex-row justify-between items-center relative">
       <img src="Logo.png" alt="logo" className="w-[92px] h-[20px]" />
       <div className="flex gap-[12px]">
         <button

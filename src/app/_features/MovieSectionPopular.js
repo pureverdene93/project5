@@ -64,7 +64,7 @@ export const MovieSectionPopular = (props) => {
               title={movie.title}
               rating={movie.vote_average.toFixed(1)}
               imageSrc={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-              popularMovieId={movie.id}
+              upcomingMovieId={movie.id}
             />
           );
         })}
