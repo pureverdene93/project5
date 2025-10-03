@@ -1,16 +1,15 @@
 "use client";
-
 import { RatingIconSmall } from "@/app/_icons/RatingIconSmall";
 
-export const SimilarMovieCard = () => {
+export const SimilarMovieCard = (props) => {
+  const { imageSrc, rating, title } = props;
   return (
-    <div className="w-[230px] h-[439px] bg-white rounded-[5px] flex flex-col gap-[8px]">
+    <div className="w-[190px] h-[372px] bg-white rounded-[5px] flex flex-col gap-[8px]">
       <button className="cursor-pointer">
         <img
           src={imageSrc}
           alt="Image Not Found"
-          className="object-cover w-[230px] h-[340px] rounded-[5px]"
-          onClick={handleMovieDetail}
+          className="object-cover w-full h-[281px] rounded-[5px]"
         />
       </button>
       <div className="ml-[8px] flex flex-col gap-[5px]">
@@ -20,7 +19,7 @@ export const SimilarMovieCard = () => {
           </span>
           10 <span className="text-zinc-400 text-[13px] ">/{rating}</span>
         </p>
-        <p className="text-black text-[16px] font-[350] ">{title}</p>
+        <p className="text-black text-[14px] font-[350] ">{title}</p>
       </div>
     </div>
   );

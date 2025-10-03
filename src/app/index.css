@@ -13,3 +13,11 @@
   top: 100px;
   z-index: 20;
 }
+.youtubeTrailerDetails {
+  width: 997px;
+  height: 561px;
+  position: absolute;
+  top: 160px;
+  z-index: 20;
+  margin-left: 40px;
+}

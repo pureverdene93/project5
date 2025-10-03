@@ -8,7 +8,9 @@ import { PlayBtn } from "@/app/_icons/playbtn";
 import { useParams } from "next/navigation";
 import { RatingIcon } from "@/app/_icons/ratingIcon";
 import { CrewDetail } from "../_components/CrewDetail";
-// import { SimilarMovieCard } from "../_components/SimilarMoviesCard";
+import { SimilarMovieCard } from "../_components/SimilarMoviesCard";
+import { SeeMore } from "@/app/_icons/SeeMoreIcon";
+import Link from "next/link";
 
 const options = {
   method: "GET",
@@ -30,12 +32,13 @@ export default function Home() {
   const ApiLink = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
   const movieTeam = `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`;
   const similarMovieApiLink = `https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=1`;
-
+  const trailerApi = `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`;
   const [movieDetail, setMovieDetail] = useState({});
   const [movieGenre, setMovieGenre] = useState([]);
   const [movieTeamDetailCrew, setMovieTeamDetailCrew] = useState([]);
   const [movieTeamDetailCast, setMovieTeamDetailCast] = useState([]);
   const [similarMovieData, setSimilarMovieData] = useState([]);
+  const [trailer, setTrailer] = useState(null);
 
   const getData = async () => {
     const data = await fetch(ApiLink, options);
@@ -50,9 +53,24 @@ export default function Home() {
 
     const similarMovieData = await fetch(similarMovieApiLink, options);
     const similarMovieJsonData = await similarMovieData.json();
-    setSimilarMovieData(similarMovieJsonData);
+    setSimilarMovieData(similarMovieJsonData.results);
 
     // console.log("this is movie detail", jsonData.genres);
+  };
+
+  const handleTrailer = async () => {
+    const trailerData = await fetch(trailerApi, options);
+    const trailerJsonData = await trailerData.json();
+    const findTrailerData = trailerJsonData.results.find(
+      (vid) => vid.site === "YouTube" && vid.type === "Trailer"
+    );
+    if (findTrailerData) {
+      setTrailer(findTrailerData.key);
+    } else {
+      <div>Trailer </div>;
+    }
+    console.log("this is trailer data", findTrailerData);
+    console.log("what is this", trailer);
   };
 
   console.log("this is similar movies data", similarMovieData);
@@ -92,7 +110,7 @@ export default function Home() {
                 <RatingIcon />
                 <div className="flex flex-col">
                   <p className="text-black">
-                    {movieDetail.vote_average}
+                    {(movieDetail.vote_average ?? 0).toFixed(1)}
                     <span className="text-zinc-500 text-[14px]">/10</span>
                   </p>
                   <p className="text-black">{movieDetail.vote_count}</p>
@@ -100,6 +118,7 @@ export default function Home() {
               </div>
             </div>
           </div>
+
           <div className="flex gap-[32px]">
             <img
               src={`https://image.tmdb.org/t/p/original/${movieDetail.poster_path}`}
@@ -111,9 +130,13 @@ export default function Home() {
                 className="w-full h-full object-cover absolute z-[-1]"
               />
               <div className="flex ml-[24px] mb-[24px] items-center gap-[5px]">
-                <button className="cursor-pointer w-[40px] h-[40px] rounded-[100%] bg-white flex items-center justify-center ">
+                <button
+                  className="cursor-pointer w-[40px] h-[40px] rounded-[100%] bg-white flex items-center justify-center "
+                  onClick={() => handleTrailer(movieDetail.id)}
+                >
                   <PlayBtn />
                 </button>
+
                 <p>Play Trailer </p>
               </div>
             </div>
@@ -152,7 +175,35 @@ export default function Home() {
             })}
           />
         </div>
-        {/* <SimilarMovieCard /> */}
+        <div className="flex items-center justify-between flex-row">
+          <p className="text-black text-[24px] font-semibold">More like this</p>
+          <button className="text-black flex items-center gap-[14px] cursor-pointer">
+            See more <SeeMore />
+          </button>
+        </div>
+        <div className="flex flex-wrap justify-between gap-[10px]">
+          {similarMovieData.slice(0, 5).map((movie) => {
+            return (
+              <div key={movie.id}>
+                <SimilarMovieCard
+                  imageSrc={` https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                  rating={movie.vote_average.toFixed(1)}
+                  title={movie.title}
+                />
+              </div>
+            );
+          })}
+        </div>
+        {trailer && (
+          <iframe
+            className="youtubeTrailerDetails"
+            src={`https://www.youtube.com/embed/${trailer}`}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        )}
       </div>
       <Footer />
     </div>
