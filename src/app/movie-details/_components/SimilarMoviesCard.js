@@ -1,17 +1,28 @@
 "use client";
 import { RatingIconSmall } from "@/app/_icons/RatingIconSmall";
+import Link from "next/link";
 
 export const SimilarMovieCard = (props) => {
-  const { imageSrc, rating, title } = props;
+  const { imageSrc, rating, title, movieId } = props;
+
+  // const router = useRouter();
+  // const pushSimilarMovieCard = () => {
+  //   router.push(`movie-details/${movieId}`);
+  //   router.refresh();
+  // };
+  console.log(movieId);
+
   return (
     <div className="w-[190px] h-[372px] bg-white rounded-[5px] flex flex-col gap-[8px]">
-      <button className="cursor-pointer">
-        <img
-          src={imageSrc}
-          alt="Image Not Found"
-          className="object-cover w-full h-[281px] rounded-[5px]"
-        />
-      </button>
+      <Link href={`/movie-details/${movieId}`}>
+        <button className="cursor-pointer">
+          <img
+            src={imageSrc}
+            alt="Image Not Found"
+            className="object-cover w-full h-[281px] rounded-[5px]"
+          />
+        </button>
+      </Link>
       <div className="ml-[8px] flex flex-col gap-[5px]">
         <p className="flex text-[14px] text-black items-center">
           <span className="mr-[5px]">

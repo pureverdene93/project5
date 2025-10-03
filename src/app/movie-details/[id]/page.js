@@ -69,8 +69,8 @@ export default function Home() {
     } else {
       <div>Trailer </div>;
     }
-    console.log("this is trailer data", findTrailerData);
-    console.log("what is this", trailer);
+    // console.log("this is trailer data", findTrailerData);
+    // console.log("what is this", trailer);
   };
 
   console.log("this is similar movies data", similarMovieData);
@@ -82,9 +82,9 @@ export default function Home() {
     (member) => member.department === "Writing"
   );
 
-  console.log("director", findDirector);
-  console.log("writter", findWriter);
-  console.log("stars", movieTeamDetailCast);
+  // console.log("director", findDirector);
+  // console.log("writter", findWriter);
+  // console.log("stars", movieTeamDetailCast);
 
   useEffect(() => {
     getData();
@@ -177,9 +177,11 @@ export default function Home() {
         </div>
         <div className="flex items-center justify-between flex-row">
           <p className="text-black text-[24px] font-semibold">More like this</p>
+          {/* <Link href={``}> */}
           <button className="text-black flex items-center gap-[14px] cursor-pointer">
             See more <SeeMore />
           </button>
+          {/* </Link> */}
         </div>
         <div className="flex flex-wrap justify-between gap-[10px]">
           {similarMovieData.slice(0, 5).map((movie) => {
@@ -189,6 +191,7 @@ export default function Home() {
                   imageSrc={` https://image.tmdb.org/t/p/original/${movie.poster_path}`}
                   rating={movie.vote_average.toFixed(1)}
                   title={movie.title}
+                  movieId={movie.id}
                 />
               </div>
             );

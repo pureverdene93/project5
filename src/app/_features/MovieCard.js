@@ -5,10 +5,9 @@ import { useRouter } from "next/navigation";
 export const MovieCard = (props) => {
   const { title, rating, imageSrc, upcomingMovieId } = props;
 
-  console.log("upcoming movie id", upcomingMovieId);
+  // console.log("upcoming movie id", upcomingMovieId);
 
   const router = useRouter();
-  const routerPopular = useRouter();
 
   const handleMovieDetail = () => {
     router.push(`movie-details/${upcomingMovieId}`);
