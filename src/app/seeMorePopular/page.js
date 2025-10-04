@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <>
       <div className="back">
-        <div className="flex flex-col gap-[52px]">
+        <div className="flex flex-col gap-[52px] items-center">
           <Header />
           <PopularMovieSection />
           <Footer />

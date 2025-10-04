@@ -10,7 +10,7 @@ export const MovieCard = (props) => {
   const router = useRouter();
 
   const handleMovieDetail = () => {
-    router.push(`movie-details/${upcomingMovieId}`);
+    router.push(`/movie-details/${upcomingMovieId}`);
   };
 
   return (

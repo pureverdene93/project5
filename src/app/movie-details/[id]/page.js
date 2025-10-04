@@ -170,18 +170,18 @@ export default function Home() {
           />
           <CrewDetail
             job={"Stars"}
-            name={movieTeamDetailCast.slice(0, 3).map((movie) => {
+            name={movieTeamDetailCast.slice(0, 1).map((movie) => {
               return movie.name;
             })}
           />
         </div>
         <div className="flex items-center justify-between flex-row">
           <p className="text-black text-[24px] font-semibold">More like this</p>
-          {/* <Link href={``}> */}
-          <button className="text-black flex items-center gap-[14px] cursor-pointer">
-            See more <SeeMore />
-          </button>
-          {/* </Link> */}
+          <Link href={`/similarMovieSection/${id}`}>
+            <button className="text-black flex items-center gap-[14px] cursor-pointer">
+              See more <SeeMore />
+            </button>
+          </Link>
         </div>
         <div className="flex flex-wrap justify-between gap-[10px]">
           {similarMovieData.slice(0, 5).map((movie) => {

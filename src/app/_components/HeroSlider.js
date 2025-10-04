@@ -99,7 +99,7 @@ export const HeroSLider = () => {
 
   return (
     <div className="flex justify-center items-center flex-col relative">
-      <div className="flex flex-row w-[1500px] overflow-hidden relative ">
+      <div className="flex flex-row w-[1440px] overflow-hidden relative ">
         <div
           ref={sliderRef}
           className="flex overflow-x-scroll scroll-smooth snap-x snap-mandatory"
